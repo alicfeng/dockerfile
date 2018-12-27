@@ -1,0 +1,16 @@
+version: "2"
+services:
+  nginx-php:
+    container_name: nginx
+    image: alicfeng/nginx-php-supervisor:latest
+    ports:
+      - 80:80
+      - 443:443
+      - 8881:8881
+    volumes:
+      - ./srv/nginx/nginx.conf/:/usr/local/nginx/nginx.conf:ro
+      - ./srv/php/php-fpm.conf/:/usr/local/php/etc/php-fpm.conf:ro
+      - ./srv/php/php.ini-production:/usr/local/php/lib/php.ini:ro
+      - ./srv/nginx/conf.d:/usr/local/nginx/conf.d
+      - /Users/alicfeng/tutorial/gogs/api.yi-insurance.com:/www/api.yi-insurance.com
+    restart: always
