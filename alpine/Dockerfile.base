@@ -1,0 +1,36 @@
+FROM alpine:3.7
+
+MAINTAINER AlicFeng <a@samego.com>
+
+RUN echo -e "http://mirrors.ustc.edu.cn/alpine/v3.7/main\nhttp://mirrors.ustc.edu.cn/alpine/v3.7/community" > /etc/apk/repositories 
+
+RUN  apk upgrade --update \
+    && apk add --no-cache linux-headers \
+    && apk add bash tzdata \
+    && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && echo ${TZ} > /etc/timezone \
+	&& GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
+    && apk add --virtual .build-deps \
+        gcc g++  \
+        libc-dev \
+        make automake autoconf \
+        openssl-dev \
+        pcre-dev \
+        zlib-dev \
+        linux-headers \
+        curl curl-dev \
+        gnupg \
+        libxslt-dev \
+        gd-dev \
+        geoip-dev \
+        openssl-dev \
+        pcre-dev \
+        zlib-dev \
+        freetype \
+        libpng \
+        libjpeg-turbo \
+        freetype-dev \
+        libpng-dev \
+        libjpeg-turbo-dev \
+        gd
+
