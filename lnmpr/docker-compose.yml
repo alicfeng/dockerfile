@@ -1,10 +1,11 @@
 version: "2"
 services:
   share:
-    container_name: share
-    image: alicfeng/share:latest
+    container_name: lnmpr
+    image: alicfeng/lnmpr:php7.2
     ports:
-      - 9504:80
+      - 9505:80
     volumes:
       - /Users/alicfeng/www/share/:/www/files/
+      - ./etc/crontab:/etc/crontabs/root
     restart: always

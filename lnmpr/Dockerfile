@@ -13,6 +13,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 COPY ./www /www
 COPY ./nginx/conf.d/default.conf /etc/nginx/conf.d/
 COPY ./supervisor.d /etc/supervisor.d/
+COPY ./etc/crontab /etc/crontabs/root
 COPY start.sh /
 
 RUN \
