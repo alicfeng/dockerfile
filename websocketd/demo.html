@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>websocketd</title>
+</head>
+<body>
+<h2>websocketd</h2>
+<div id="container"></div>
+<script>
+    var ws = null;
+    var timer = null;
+
+    init();
+
+    function request() {
+        var url = location.search;
+        var params = {};
+        if (-1 !== url.indexOf("?")) {
+            var str = url.substr(1);
+            var strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                params[strs[i].split("=")[0]] = (strs[i].split("=")[1]);
+            }
+        }
+        return params;
+    }
+
+    // setup websocket with callbacks
+    function createWebSocket() {
+        try {
+
+            ws = new WebSocket('ws://localhost:' + request()['port']);
+            ws.onopen = function () {
+                console.log('CONNECT');
+            };
+            ws.onclose = function () {
+                console.log('DISCONNECT');
+                if (!timer) {
+                    clearInterval(timer)
+                }
+                timer = setTimeout(function (ws) {
+                    keeplive(ws)
+                }, 3000)
+            };
+            ws.onmessage = function (event) {
+                console.log('' + event.data);
+                document.getElementById("container").innerHTML += "<div>" + event.data + "</div>";
+            };
+        } catch (e) {
+            console.error('ws connect failed | ' + e)
+            console.log('trying connect again')
+        }
+    }
+
+    function keeplive(ws) {
+        createWebSocket(ws);
+    }
+
+    function init() {
+        createWebSocket();
+    }
+</script>
+</body>
+</html>
