@@ -73,17 +73,3 @@ docker pull alicfeng/websocketd:latest
 
   ![image](https://github.com/alicfeng/dockerfile/raw/master/asset/websocketd_demo.png)
 
-
-
-
-
- 
-
-
-
-
-
-
-
-#### `docker-compose` 实例
-
