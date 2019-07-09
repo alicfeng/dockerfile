@@ -1,0 +1,11 @@
+version: "2"
+services:
+  websocketd:
+    container_name: websocketd
+    image: alicfeng/websocketd:latest
+    ports:
+      - 9508:8888
+    volumes:
+      # this is cli command script for websocketd
+      - ./srv/command.sh:/command.sh
+    restart: always
