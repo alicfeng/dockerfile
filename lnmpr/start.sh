@@ -1,3 +1,4 @@
 #!/bin/sh
 
-crond -f && supervisord --nodaemon --configuration /etc/supervisord.conf
+crond -s /var/spool/cron/crontabs -f -L /var/log/cron/cron.log \
+&& supervisord --nodaemon --configuration /etc/supervisord.conf

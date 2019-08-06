@@ -1,8 +1,8 @@
 version: "2"
 services:
   share:
-    container_name: share
-    image: alicfeng/share:latest
+    container_name: folder
+    image: alicfeng/folder:latest
     ports:
       - 9504:80
     volumes:

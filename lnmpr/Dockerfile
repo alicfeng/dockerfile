@@ -14,7 +14,7 @@ COPY ./www /www
 COPY ./nginx/conf.d/default.conf /etc/nginx/conf.d/
 COPY ./supervisor.d /etc/supervisor.d/
 COPY ./etc/crontab /etc/crontabs/root
-COPY start.sh /
+
 
 RUN \
 # use aliyun mirrors && update
@@ -98,5 +98,7 @@ php -- --install-dir=/usr/bin/ --filename=composer \
 && sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /etc/php7/php.ini \
 && sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /etc/php7/php.ini \
 && sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= 0|i" /etc/php7/php.ini
+
+COPY start.sh /
 
 CMD ["/start.sh"]

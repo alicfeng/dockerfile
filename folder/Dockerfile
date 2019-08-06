@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-MAINTAINER AlicFeng <a@samego.com>
+LABEL maintainer="a@samego.com"
 
 COPY ./www /www
 COPY ./nginx/default.conf /etc/nginx/conf.d/

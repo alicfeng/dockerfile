@@ -1,0 +1,12 @@
+version: "2"
+services:
+  phpredisadmin:
+    image: alicfeng/phpredisadmin
+    environment:
+      - ADMIN_USER=admin
+      - ADMIN_PASS=admin
+      - REDIS_1_HOST=172.20.10.7
+      - REDIS_1_PORT=6379
+    ports:
+      - 7180:80
+    restart: always
