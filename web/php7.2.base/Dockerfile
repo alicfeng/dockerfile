@@ -7,36 +7,19 @@ ENV TIMEZONE=Asia/Shanghai \
     PHP_MEMORY_LIMIT=512M \
     MAX_UPLOAD=50M \
     PHP_MAX_FILE_UPLOAD=200 \
-    PHP_MAX_POST=100M \
-    PHPREDIS_VERSION=4.3.0
+    PHP_MAX_POST=100M
 
 # install dependent app including php,nginx,composer
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
     apk update && \
-
     # install php
     apk --no-cache add --virtual .build-deps \
     php7 php7-fpm \
-    php7-mysqli php7-json php7-openssl php7-curl \
-    php7-zlib php7-xml php7-phar php7-intl php7-dom \
-    php7-xmlreader php7-ctype php7-session php7-mbstring \
-    php7-gd php7-pdo php7-dev curl \
-
-    # install nginx
     nginx \
-
-    # install supervisor
     supervisor && \
-
-    # install composer
-    curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer  && \
-    chmod a+x /usr/local/bin/composer && \
-
-    # clean
-    apk del tzdata gcc g++ make automake autoconf git -f && \
-    rm -rf /tmp/* /var/cache/apk/* && \
-
+    tzdata && \
+    ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
+    echo $TIMEZONE > /etc/timezone && \
     # create www.www and configuration for application
     addgroup -S www && \
     adduser -D -S -h /var/cache/www -s /sbin/nologin -G www www && \
