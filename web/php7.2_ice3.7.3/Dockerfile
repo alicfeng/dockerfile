@@ -5,7 +5,7 @@ LABEL Maintainer="AlicFeng <a@samego.com>" \
 # build process noninteractive
 ENV DEBIAN_FRONTEND noninteractive
 # timezone
-ENV TZ=Asia/Shanghai
+ENV TIMEZONE=Asia/Shanghai
 
 # alarm2(alarm package)
 ADD package/alarm2.tar.gz /usr/
@@ -100,7 +100,8 @@ RUN apt-get update \
     # refresh load share library and env handler
     && ldconfig \
     && chmod +x /usr/local/bin/composer \
-    && echo '$TZ' > /etc/timezone \
+    && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
+    && cp /usr/share/zoneinfo/${TIMEZONE} > /etc/timezone \
 
     # clean
     && apt-get auto-remove php7.2-dev curl -y \
@@ -123,3 +124,5 @@ COPY php/fpm/www.conf /etc/php/7.2/fpm/pool.d/www.conf
 EXPOSE 80 443
 WORKDIR /var/www/
 CMD ["docker-entrypoint.sh"]
+
+#ice-doc https://doc.zeroc.com/ice/3.7/release-notes/using-the-linux-binary-distributions#id-.UsingtheLinuxBinaryDistributionsv3.7-deb
