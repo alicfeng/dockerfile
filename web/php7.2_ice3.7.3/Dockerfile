@@ -11,6 +11,8 @@ ENV TIMEZONE=Asia/Shanghai
 ADD package/alarm2.tar.gz /usr/
 # tonyenc(php source encrypt)
 ADD package/tonyenc.tar.gz /usr/local/src/
+# redis
+ADD package/redis-5.1.1.tgz /usr/local/src/
 # composer (could choose curl ...)
 COPY package/composer.phar /usr/local/bin/composer
 # swoole
@@ -91,6 +93,17 @@ RUN apt-get update \
     && echo extension=tonyenc.so >> /etc/php/7.2/mods-available/tonyenc.ini \
     && ln -s /etc/php/7.2/mods-available/tonyenc.ini /etc/php/7.2/cli/conf.d/tonyenc.ini \
     && ln -s /etc/php/7.2/mods-available/tonyenc.ini /etc/php/7.2/fpm/conf.d/tonyenc.ini \
+
+    # install redis by source
+    && cd /usr/local/src/redis-5.1.1
+    && phpize \
+    && ./configure \
+    && make \
+    && make install \
+    && echo extension=redis.so >> /etc/php/7.2/mods-available/redis.ini \
+  #  && ln -s /etc/php/7.2/mods-available/redis.ini /etc/php/7.2/cli/conf.d/redis.ini \
+  #  && ln -s /etc/php/7.2/mods-available/redis.ini /etc/php/7.2/fpm/conf.d/redis.ini \
+
 
     # cron
     && chmod 0644 /etc/cron.d/cron \
