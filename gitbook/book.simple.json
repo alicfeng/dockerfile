@@ -1,0 +1,47 @@
+{
+  "author": "AlicFeng <a@samego.com>",
+  "title": "TeamStandard",
+  "description": "TeamStandard For Team Development",
+  "extension": null,
+  "generator": "site",
+  "language": "zh-hans",
+  "root": "book",
+  "links": {
+    "sharing": {
+      "all": null,
+      "facebook": null,
+      "google": null,
+      "twitter": null,
+      "weibo": null
+    },
+    "sidebar": {
+      "AlicFeng": "https://www.github.com/alicfeng"
+    }
+  },
+  "output": null,
+  "pdf": {
+    "fontSize": 12,
+    "footerTemplate": null,
+    "headerTemplate": null,
+    "margin": {
+      "bottom": 36,
+      "left": 62,
+      "right": 62,
+      "top": 36
+    },
+    "pageNumbers": false,
+    "paperSize": "a4"
+  },
+  "plugins": [
+    "copy-code-button",
+    "expandable-chapters-small"
+  ],
+  "variables": {},
+  "pluginsConfig": {
+    "expandable-chapters-small": {
+    },
+    "theme-default": {
+      "showLevel": true
+    }
+  }
+}

@@ -1,0 +1,8 @@
+version: "2"
+services:
+  gitbook:
+    container_name: gitbook
+    image: alicfeng/gitbook:1.0.0
+    ports:
+      - 8888:4000
+    restart: always
