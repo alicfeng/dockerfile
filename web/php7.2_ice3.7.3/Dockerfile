@@ -29,13 +29,13 @@ RUN apt-get update \
     && apt-get install \
         curl \
         tzdata \
-        jpegoptim \
-        libjpeg-turbo-progs \
-        pngcrush \
-        optipng \
-        apngopt \
-        pngnq \
-        pngquant \
+#        jpegoptim \
+#        libjpeg-turbo-progs \
+#        pngcrush \
+#        optipng \
+#        apngopt \
+#        pngnq \
+#        pngquant \
         cron \
         gnupg2 -y \
     && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv B6391CB2CFBA643D \
@@ -123,9 +123,14 @@ RUN apt-get update \
 #    && echo "set encoding=utf-8" >> /etc/vim/vimrc \
 
     # clean
-    && apt-get auto-remove php7.2-dev curl tzdata -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/local/src/*
+    && apt-get auto-remove php7.2-dev curl gnupg2 -y \
+    && apt-get autoclean \
+    && rm -rf /var/lib/apt/lists/* \
+       /tmp/* \
+       /var/tmp/* \
+       /usr/local/src/* \
+       /etc/apt/sources.list.d/ice.list
+
 
 # supervisor
 COPY supervisord/supervisord.conf /etc/supervisor/supervisord.conf
