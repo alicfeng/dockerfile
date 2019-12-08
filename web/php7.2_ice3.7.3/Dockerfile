@@ -2,10 +2,10 @@ FROM ubuntu:18.04
 LABEL Maintainer="AlicFeng <a@samego.com>" \
       Description="PHP7.2+Nginx+ICE3.7.3+Supervisor container based on ubuntu:18.04 LTS"
 
-# build process noninteractive
-ENV DEBIAN_FRONTEND noninteractive
-# timezone
-ENV TIMEZONE=Asia/Shanghai
+# env list
+ENV DEBIAN_FRONTEND=noninteractive \
+    TIMEZONE=Asia/Shanghai \
+    LANG=C.UTF-8
 
 # alarm2(alarm package)
 ADD package/alarm2.tar.gz /usr/
@@ -28,6 +28,7 @@ RUN apt-get update \
     ## base dependence
     && apt-get install \
         curl \
+        tzdata \
         jpegoptim \
         libjpeg-turbo-progs \
         pngcrush \
@@ -68,6 +69,8 @@ RUN apt-get update \
         php-apcu \
         # php ice ext
         php-zeroc-ice \
+#        git \
+#        vim \
         -y \
     && pecl channel-update pecl.php.net \
 
@@ -95,7 +98,7 @@ RUN apt-get update \
     && ln -s /etc/php/7.2/mods-available/tonyenc.ini /etc/php/7.2/fpm/conf.d/tonyenc.ini \
 
     # install redis by source
-    && cd /usr/local/src/redis-5.1.1
+    && cd /usr/local/src/redis-5.1.1 \
     && phpize \
     && ./configure \
     && make \
@@ -113,11 +116,14 @@ RUN apt-get update \
     # refresh load share library and env handler
     && ldconfig \
     && chmod +x /usr/local/bin/composer \
-    && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
-    && cp /usr/share/zoneinfo/${TIMEZONE} > /etc/timezone \
+    && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
+    && echo "${TIMEZONE}" > /etc/timezone \
+#    && echo "set fileencodings=utf-8" >> /etc/vim/vimrc \
+#    && echo "set termencoding=utf-8" >> /etc/vim/vimrc \
+#    && echo "set encoding=utf-8" >> /etc/vim/vimrc \
 
     # clean
-    && apt-get auto-remove php7.2-dev curl -y \
+    && apt-get auto-remove php7.2-dev curl tzdata -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/local/src/*
 
