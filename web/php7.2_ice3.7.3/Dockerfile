@@ -131,7 +131,6 @@ RUN apt-get update \
        /usr/local/src/* \
        /etc/apt/sources.list.d/ice.list
 
-
 # supervisor
 COPY supervisord/supervisord.conf /etc/supervisor/supervisord.conf
 COPY supervisord/conf.d /etc/supervisor/conf.d
